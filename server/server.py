@@ -97,6 +97,6 @@ def auth():
     result = cursor.fetchone()
     cursor.close()
     if (result != None):
-        return jsonify(auth=True)
+        return jsonify(auth=True,id=result[0])
     else:
         return jsonify(auth=False)

@@ -31,6 +31,7 @@ class Test extends React.Component {
         .catch(err => console.log(err));
     }
 
+
     auth() {
         const localStorage = window.localStorage;
 

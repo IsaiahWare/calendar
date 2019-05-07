@@ -1,6 +1,7 @@
 import React from 'react';
 import Login from '../account/Login';
 import {connect} from 'react-redux';
+import {setAuthAction} from '../../redux/actions/setAuthAction';
 import '../../styles/sidemenu/SideMenu.css';
 
 class SideMenu extends React.Component {
@@ -8,9 +9,15 @@ class SideMenu extends React.Component {
         super(props);
         this.auth = this.auth.bind(this);
         this.test = this.test.bind(this);
+        this.setAuthAction = this.setAuthAction.bind(this);
+        this.logout = this.logout.bind(this);
         this.state = {
             auth: false
         }
+    }
+
+    logout() {
+
     }
 
     auth() {
@@ -35,7 +42,18 @@ class SideMenu extends React.Component {
         .then(res => res.json())
         .then(res => {
             if (res.auth === false) {
-                localStorage.removeItem('cookie')
+                localStorage.removeItem('cookie');
+                const obj = {
+                    id: null,
+                    cookie: null
+                }
+                this.setAuthAction(obj);
+            } else {
+                const obj = {
+                    id: res.id,
+                    cookie: localStorage.getItem('cookie')
+                }
+                this.setAuthAction(obj);
             }
             console.log(res)
         })
@@ -45,6 +63,14 @@ class SideMenu extends React.Component {
     test() {
         console.log(this.props.authReducer)
     }
+
+    // Redux
+
+    setAuthAction(obj) {
+        this.props.setAuthAction(obj);
+    }
+
+    // Lifestyle
 
     componentWillMount() {
         this.setState({
@@ -66,8 +92,8 @@ const mapStateToProps = state => ({
     ...state
 })
 
-// const mapDispatchToProps = dispatch => ({
-//     setAuthAction: (obj) => dispatch(setAuthAction(obj)) 
-// })
+const mapDispatchToProps = dispatch => ({
+    setAuthAction: (obj) => dispatch(setAuthAction(obj)) 
+})
 
-export default connect(mapStateToProps, null)(SideMenu);
+export default connect(mapStateToProps, mapDispatchToProps)(SideMenu);
