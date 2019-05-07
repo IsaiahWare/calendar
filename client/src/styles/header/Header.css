@@ -1,0 +1,29 @@
+#header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    width: 100%;
+}
+
+#month-display {
+    width: calc(100vw/7);
+    text-align: center;
+    font-family: 'Open Sans';
+    font-size: 1.25em;
+    line-height: 60px;
+    min-width: 155px;
+}
+
+#header-month-buttons {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+#header-month-buttons button {
+    width: 200px;
+    height: 100%;
+    background-color: transparent;
+    outline: none;
+    font-size: 14px;
+    border: none;
+}

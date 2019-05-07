@@ -1,0 +1,15 @@
+#calendar {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+    height: calc(100vh - 60px);
+}
+
+.calendar-small {
+    width: calc(100% - 600px) !important;
+}
+
+.wrapper {
+    display: flex;
+    flex-flow: row nowrap;
+}

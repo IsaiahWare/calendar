@@ -1,0 +1,9 @@
+#side-menu {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 600px;
+    height: calc(100vh - 60px);
+    border-right: 1px solid rgb(173,173,173);
+}

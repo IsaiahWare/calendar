@@ -1,0 +1,37 @@
+#register-form {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    min-width: 300px;
+    width:600px;
+    max-width: 100%;
+}
+
+#register-form 
+input[type="text"],
+input[type="password"] {
+    display: block;
+    width: 300px;
+    height: 30px;
+    margin: 0 auto 10px;
+    font-family: 'Open Sans';
+    text-align: center;
+    font-size: 14px;
+}
+
+#register-form h1 {
+    font-family: 'Open Sans';
+    font-size: 26px;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+#register-form input[type="submit"] {
+    display: block;
+    width: 300px;
+    height: 30px;
+    font-family: 'Open Sans';
+    margin: 0 auto;
+    border: 1px solid black;
+    font-size: 14px;
+}

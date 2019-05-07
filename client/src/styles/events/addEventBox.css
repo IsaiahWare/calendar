@@ -1,0 +1,7 @@
+.addEventBox {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    z-index: 99999;
+    background-color: red;
+}
