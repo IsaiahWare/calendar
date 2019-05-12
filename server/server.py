@@ -14,6 +14,27 @@ CORS(app)
 
 connection = mysql.connect(user='root', password='password', host='127.0.0.1', database='calendar')
 
+@app.route("/add_event", methods=['GET', 'POST'])
+def add_event():
+    data = json.loads(request.get_data().decode("utf-8"))
+    cursor = connection.cursor(buffered=True)
+    # query = "INSERT INTO events (user_id, name, startMonth, startDay, startYear, endMonth, endDay, endYear, startHour, startMinutes, endHour, endMinutes) VALUES (%d,%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d)"
+    query = "INSERT INTO events (user_id, name, startMonth, startDay, startYear, endMonth, endDay, endYear, startHour, startMinutes, endHour, endMinutes) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+
+        
+
+    try:
+        cursor.execute(query, (data['userID'],data['name'],data['startMonth'],data['startDay'],data['startYear'],data['endMonth'],data['endDay'],data['endYear'],data['startHour'], data['startMinutes'],data['endHour'],data['endMinutes']))
+        # cursor.execute(query, (data['userID'],data['name'],data['startMonth'],data['startDay'],data['startYear'],data['endMonth'],data['endDay'],data['endYear'],data['startHour'],data['startMinutes'],data['endHour'],data['endMinutes'],));
+    except mysql.Error as e:
+        print(e)
+        cursor.close()
+        return jsonify(auth=False)
+    
+    connection.commit()
+    cursor.close()
+    return jsonify(auth=True)
+
 @app.route("/make_cookie", methods=['GET', 'POST'])
 def make_cookie():
     data = json.loads(request.get_data().decode("utf-8"))

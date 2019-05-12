@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {setAuthAction} from '../../redux/actions/setAuthAction';
 import {openAddEventBoxAction, closeAddEventBoxAction} from '../../redux/actions/addEventBoxActions';
+import ActionBox from '../events/ActionBox';
+import {Redirect} from 'react-router-dom';
 import '../../styles/calendar/Day.css';
 
 class Day extends Component {
@@ -11,8 +13,9 @@ class Day extends Component {
         this.handleClick = this.handleClick.bind(this)
         this.closeAddEventBoxAction = this.closeAddEventBoxAction.bind(this);
         this.openAddEventBoxAction = this.openAddEventBoxAction.bind(this);
+        this.handleCloseActionBox = this.handleCloseActionBox.bind(this);
         this.state = {
-            redirect: false
+            clicked: false
         }
     }
 
@@ -29,10 +32,16 @@ class Day extends Component {
     }
 
     handleClick(event) {
-        // console.log(this.props.authReducer);
-        // const id = event.target.id;
+        if (!this.state.clicked) {
+            this.setState({
+                clicked: true
+            })
+        }
+    }
+
+    handleCloseActionBox() {
         this.setState({
-            redirect: true
+            clicked: false
         })
     }
 
@@ -52,7 +61,7 @@ class Day extends Component {
         }
 
         return (
-            <div className={className} id={this.props.id}>
+            <div className={className} id={this.props.id} onClick={this.handleClick}>
                 {
                     this.props.dayName != null ? <p>{this.props.dayName}</p> : null
                 }
@@ -62,6 +71,8 @@ class Day extends Component {
                     &nbsp;
                     {this.props.number}
                 </div>
+                {this.state.clicked ? <ActionBox close={this.handleCloseActionBox}/> : null}
+                {/* {this.state.clicked ? <Redirect to="/day/"/> : null} */}
             </div>
         )
     }

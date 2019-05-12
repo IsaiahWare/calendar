@@ -1,0 +1,9 @@
+.ActionBox {
+    position: fixed;
+    width: 100%;
+    height: calc(100vh - 60px);
+    top: 60px;
+    left:0px;
+    z-index: 9999;
+    background-color: white;
+}

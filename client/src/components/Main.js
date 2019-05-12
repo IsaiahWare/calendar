@@ -4,6 +4,7 @@ import Calendar from './calendar/Calendar';
 import Header from './header/Header';
 import SideMenu from './sidemenu/SideMenu';
 import {setAuthAction} from '../redux/actions/setAuthAction'
+import auth from '../helpers/auth';
 import '../styles/Container.css';
 
 class Main extends Component {
@@ -12,9 +13,45 @@ class Main extends Component {
         super(props);
         this.setAuthAction = this.setAuthAction.bind(this);
         this.toggleMenu = this.toggleMenu.bind(this);
+        this.auth = this.auth.bind(this);
         this.state = {
-            sideMenu: false
+            sideMenu: false,
+            auth: false
         }
+    }
+
+    auth() {
+        const localStorage = window.localStorage;
+        if (localStorage.getItem('cookie') === null) {
+            return false;
+        }
+        const data = {
+            userID: this.props.authReducer.id,
+            cookie: localStorage.getItem('cookie')
+        }
+        fetch("http://127.0.0.1:5000/auth", {
+            method: 'post',
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(res => {
+            if (res.auth === false) {
+                localStorage.removeItem('cookie');
+                const obj = {
+                    id: null,
+                    cookie: null
+                }
+                this.setAuthAction(obj);
+            } else {
+                const obj = {
+                    id: res.id,
+                    cookie: localStorage.getItem('cookie')
+                }
+                this.setAuthAction(obj);
+            }
+            console.log(res)
+        })
+        .catch(err => console.log(err));
     }
 
     toggleMenu() {
@@ -31,8 +68,8 @@ class Main extends Component {
 
     // Lifecycle methods
 
-    componentDidMount() {
-        // console.log(JSON.stringify(this.props.sideMenuReducer))
+    componentWillMount() {
+        this.auth();
     }
 
     componentDidUpdate(next, prev) {

@@ -39,13 +39,13 @@ export const generateWeeks = (date) => {
                         obj["day"] = numDaysLastMonth-firstDayCurrentMonth+idx+1;
                         obj["faded"] = true;
                         if (currentMonth === 0) {
-                            obj["id"] = `${lastYear}${11}${obj["day"]}`;
+                            obj["id"] = `${lastYear}${12}${obj["day"] < 10 ? "0"+obj["day"] : obj["day"]}`;
                         } else {
-                            obj["id"] = `${currentYear}${lastMonth}${obj["day"]}`;
+                            obj["id"] = `${currentYear}${lastMonth < 9 ? "0"+(lastMonth+1) : lastMonth+1}${obj["day"] < 10 ? "0"+obj["day"] : obj["day"]}`;
                         }
                     } else {
                         obj["day"] = dayCounter++;
-                        obj["id"] = `${currentYear}${currentMonth}${obj["day"]}`;
+                        obj["id"] = `${currentYear}${currentMonth < 9 ? "0"+(currentMonth+1) : currentMonth+1}${obj["day"] < 10 ? "0"+obj["day"] : obj["day"]}`;
                     }
                     return obj;
                 })
@@ -54,14 +54,16 @@ export const generateWeeks = (date) => {
                 week.map( function(obj)  {
                     if (dayCounter <= numDaysCurrentMonth) { //within current month
                         obj["day"] = dayCounter++;
-                        obj["id"] = `${currentYear}${currentMonth}${obj["day"]}`;
+                        obj["id"] = `${currentYear}${currentMonth < 9 ? "0"+(currentMonth+1) : currentMonth+1}${obj["day"] < 10 ? "0"+obj["day"] : obj["day"]}`;
                     } else { //next month
                         obj["day"] = (dayCounter++) - numDaysCurrentMonth;
                         obj["faded"] = true;
                         if (currentMonth === 11) {
-                            obj["id"] = `${nextYear}0${obj["day"]}`;
+                            obj["id"] = `${nextYear}${1}${obj["day"] < 10 ? "0"+obj["day"] : obj["day"]}`;
+                            // obj["id"] = `${nextYear}0${obj["day"]}`;
                         } else {
-                            obj["id"] = `${currentYear}${nextMonth}${obj["day"]}`;
+                            obj["id"] = `${currentYear}${nextMonth+1}${obj["day"] < 10 ? "0"+obj["day"] : obj["day"]}`;
+                            // obj["id"] = `${currentYear}${nextMonth}${obj["day"]}`;
                         }
                     }
                     return obj;
@@ -71,7 +73,7 @@ export const generateWeeks = (date) => {
             default: //every other week
                 week.map( function(obj)  {
                     obj["day"] = dayCounter++;
-                    obj["id"] = `${currentYear}${currentMonth}${obj["day"]}`;
+                    obj["id"] = `${currentYear}${currentMonth < 9 ? "0"+(currentMonth+1) : currentMonth+1}${obj["day"] < 10 ? "0"+obj["day"] : obj["day"]}`;
                     return obj;
                 })
                 break;
