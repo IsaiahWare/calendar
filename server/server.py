@@ -82,7 +82,7 @@ def login():
         return jsonify(auth=False)
 
 # Maintains session; checks if user is logged-in via a cookie
-# gets passed in a userID and cookie in dict format
+# gets passed in a cookie in dict format
 @app.route("/auth", methods=['GET', 'POST'])
 def auth():
     data = json.loads(request.get_data().decode("utf-8"))
@@ -100,3 +100,16 @@ def auth():
         return jsonify(auth=True,id=result[0])
     else:
         return jsonify(auth=False)
+
+@app.route("/logout", methods=['GET', 'POST'])
+def logout():
+    data = json.loads(request.get_data().decode("utf-8"))
+    cursor = connection.cursor()
+    query = ("UPDATE users SET cookie = null WHERE id = %s")
+    try:
+        cursor.execute(query,(data['userID'],))
+    except mysql.Error as e:
+        print(e)
+        cursor.close()
+        return jsonify(auth=False, error=e)
+    return jsonify(auth=True)

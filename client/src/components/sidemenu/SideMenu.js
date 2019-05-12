@@ -1,5 +1,7 @@
 import React from 'react';
 import Login from '../account/Login';
+import Register from '../account/Register';
+import AccountMain from '../account/AccountMain';
 import {connect} from 'react-redux';
 import {setAuthAction} from '../../redux/actions/setAuthAction';
 import '../../styles/sidemenu/SideMenu.css';
@@ -10,27 +12,56 @@ class SideMenu extends React.Component {
         this.auth = this.auth.bind(this);
         this.test = this.test.bind(this);
         this.setAuthAction = this.setAuthAction.bind(this);
+        this.handleAuthTrue = this.handleAuthTrue.bind(this);
+        this.handleAuthFalse = this.handleAuthFalse.bind(this);
         this.logout = this.logout.bind(this);
         this.state = {
             auth: false
         }
     }
 
-    logout() {
+    handleAuthTrue() {
+        this.setState({
+            auth: true
+        })
+    }
 
+    handleAuthFalse() {
+        this.setState({
+            auth: false
+        })
+    }
+
+    logout() {
+        const data = {
+            userID: this.props.authReducer.id
+        }
+        fetch("http://127.0.0.1:5000/logout", {
+            method: 'post',
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(res => {
+            if (res.auth === true) {
+                const obj = {
+                    id: null,
+                    cookie: null
+                }
+                this.setAuthAction(obj);
+                localStorage.removeItem('cookie');
+                this.handleAuthFalse();
+            } else {
+                console.log("Logout failed: " + res.error)
+            }
+        })
+        .catch(err => console.log(err));
     }
 
     auth() {
         const localStorage = window.localStorage;
         if (localStorage.getItem('cookie') === null) {
-            console.log("false auth: cookie is empty");
             return false;
         }
-        // id is local, gets erased during refresh
-        // if (this.props.authReducer.id === null) {
-        //     console.log("false auth: id is empty")
-        //     return false;
-        // }
         const data = {
             userID: this.props.authReducer.id,
             cookie: localStorage.getItem('cookie')
@@ -81,8 +112,9 @@ class SideMenu extends React.Component {
     render() {
         return (
             <div id="side-menu">
-                {this.state.auth === false ? <Login/> : null}
+                {this.state.auth === false ? <AccountMain handleAuthFalse={this.handleAuthFalse} handleAuthTrue={this.handleAuthTrue}/> : null}
                 <button onClick={this.test}>get the props</button>
+                <button onClick={this.logout}>Logout</button>
             </div>
         )
     }
