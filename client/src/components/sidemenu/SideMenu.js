@@ -1,6 +1,4 @@
 import React from 'react';
-import Login from '../account/Login';
-import Register from '../account/Register';
 import AccountMain from '../account/AccountMain';
 import {connect} from 'react-redux';
 import {setAuthAction} from '../../redux/actions/setAuthAction';

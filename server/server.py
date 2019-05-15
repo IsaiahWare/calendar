@@ -14,18 +14,34 @@ CORS(app)
 
 connection = mysql.connect(user='root', password='password', host='127.0.0.1', database='calendar')
 
+@app.route("/get_events", methods=['GET', 'POST'])
+def get_events():
+    # data = json.loads(request.get_data().decode("utf-8"))
+    # cursor = connection.cursor(buffered=True)
+    # #query = "SELECT name FROM events WHERE user_id = %s AND startMonth <= %s AND startDay <= %s AND startYear <= %s AND endMonth >= %s AND endDay >= %s AND endYear >= %s"
+    # query = "SELECT name FROM events WHERE user_id = %s AND startMonth <= %s AND startDay <= %s AND startYear <= %s AND endMonth >= %s AND endDay >= %s AND endYear >= %s"
+    # try:
+    #     cursor.execute(query, (data['userID'], data['startMonth'], data['startDay'], data['startYear'], data['endMonth'], data['endDay'],data['endYear']))
+    #     #cursor.execute(query, (data['userID'],data['startMonth'],data['startDay'],data['startYear'],data['endMonth'],data['endDay'],data['endYear']))
+    # except mysql.Error as e:
+    #     print(e)
+    #     cursor.close()
+    #     return jsonify(auth=False)
+    # result = cursor.fetchall()
+
+    # cursor.close()
+    # return jsonify(auth=True,res=result)
+    return jsonify(auth=False)
+
+
 @app.route("/add_event", methods=['GET', 'POST'])
 def add_event():
     data = json.loads(request.get_data().decode("utf-8"))
+    print(data);
     cursor = connection.cursor(buffered=True)
-    # query = "INSERT INTO events (user_id, name, startMonth, startDay, startYear, endMonth, endDay, endYear, startHour, startMinutes, endHour, endMinutes) VALUES (%d,%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d)"
-    query = "INSERT INTO events (user_id, name, startMonth, startDay, startYear, endMonth, endDay, endYear, startHour, startMinutes, endHour, endMinutes) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-
-        
-
+    query = "INSERT INTO events (user_id, name, start_date, end_date, start_time, end_time) VALUES (%s, %s, %s, %s, %s, %s)"
     try:
-        cursor.execute(query, (data['userID'],data['name'],data['startMonth'],data['startDay'],data['startYear'],data['endMonth'],data['endDay'],data['endYear'],data['startHour'], data['startMinutes'],data['endHour'],data['endMinutes']))
-        # cursor.execute(query, (data['userID'],data['name'],data['startMonth'],data['startDay'],data['startYear'],data['endMonth'],data['endDay'],data['endYear'],data['startHour'],data['startMinutes'],data['endHour'],data['endMinutes'],));
+        cursor.execute(query, (data['userID'],data['name'],data['startDate'],data['endDate'],data['startTime'],data['endTime']))
     except mysql.Error as e:
         print(e)
         cursor.close()

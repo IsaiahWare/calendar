@@ -4,7 +4,6 @@ import Calendar from './calendar/Calendar';
 import Header from './header/Header';
 import SideMenu from './sidemenu/SideMenu';
 import {setAuthAction} from '../redux/actions/setAuthAction'
-import auth from '../helpers/auth';
 import '../styles/Container.css';
 
 class Main extends Component {
@@ -49,7 +48,7 @@ class Main extends Component {
                 }
                 this.setAuthAction(obj);
             }
-            console.log(res)
+            // console.log(res)
         })
         .catch(err => console.log(err));
     }
@@ -72,17 +71,14 @@ class Main extends Component {
         this.auth();
     }
 
-    componentDidUpdate(next, prev) {
-        // console.log(JSON.stringify(this.props.sideMenuReducer))
-    }
-
     render() {
+        const userID = this.props.authReducer.id;
         return (
             <React.Fragment>
                 <Header toggleSideMenu={this.toggleMenu} date={this.props.updateDateReducer.date != null ? this.props.updateDateReducer.date : new Date()}/>
                 <div className="wrapper">
                     {this.state.sideMenu === true ? <SideMenu/> : null}
-                    {this.state.sideMenu === true ? <Calendar size={"small"}/> : <Calendar/>}
+                    <Calendar userID={userID}/>
                 </div>
             </React.Fragment>
         )

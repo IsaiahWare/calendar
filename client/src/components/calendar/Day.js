@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import {setAuthAction} from '../../redux/actions/setAuthAction';
 import {openAddEventBoxAction, closeAddEventBoxAction} from '../../redux/actions/addEventBoxActions';
 import ActionBox from '../events/ActionBox';
-import {Redirect} from 'react-router-dom';
 import '../../styles/calendar/Day.css';
 
 class Day extends Component {
@@ -15,23 +14,14 @@ class Day extends Component {
         this.openAddEventBoxAction = this.openAddEventBoxAction.bind(this);
         this.handleCloseActionBox = this.handleCloseActionBox.bind(this);
         this.state = {
-            clicked: false
+            clicked: false,
+            year: this.props.id.substring(0,4),
+            month: this.props.id.substring(4,6),
+            day: this.props.id.substring(6,8)
         }
     }
 
-    openAddEventBoxAction(id) {
-        this.props.openAddEventBoxAction(id);
-    }
-
-    closeAddEventBoxAction(id) {
-        this.props.closeAddEventBoxAction(id);
-    }
-
-    setAuthAction(obj) {
-        this.props.setAuthAction(obj);
-    }
-
-    handleClick(event) {
+    handleClick() {
         if (!this.state.clicked) {
             this.setState({
                 clicked: true
@@ -45,8 +35,21 @@ class Day extends Component {
         })
     }
 
+    // Redux
+
+    openAddEventBoxAction(id) {
+        this.props.openAddEventBoxAction(id);
+    }
+
+    closeAddEventBoxAction(id) {
+        this.props.closeAddEventBoxAction(id);
+    }
+
+    setAuthAction(obj) {
+        this.props.setAuthAction(obj);
+    }
+
     componentDidMount() {
-        // console.log(this.props.authReducer);
     }
 
     render() {

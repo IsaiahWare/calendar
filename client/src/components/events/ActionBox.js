@@ -1,6 +1,5 @@
 import React from 'react';
 import AddEvent from './AddEvent';
-import {Redirect} from 'react-router-dom';
 import '../../styles/events/ActionBox.css';
 
 class ActionBox extends React.Component {

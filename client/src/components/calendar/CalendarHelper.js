@@ -60,10 +60,8 @@ export const generateWeeks = (date) => {
                         obj["faded"] = true;
                         if (currentMonth === 11) {
                             obj["id"] = `${nextYear}${1}${obj["day"] < 10 ? "0"+obj["day"] : obj["day"]}`;
-                            // obj["id"] = `${nextYear}0${obj["day"]}`;
                         } else {
-                            obj["id"] = `${currentYear}${nextMonth+1}${obj["day"] < 10 ? "0"+obj["day"] : obj["day"]}`;
-                            // obj["id"] = `${currentYear}${nextMonth}${obj["day"]}`;
+                            obj["id"] = `${currentYear}${nextMonth < 9 ? "0" + (nextMonth+1) : nextMonth+1}${obj["day"] < 10 ? "0"+obj["day"] : obj["day"]}`;
                         }
                     }
                     return obj;

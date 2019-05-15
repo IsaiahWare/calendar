@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { incDateAction } from '../../redux/actions/incDateAction';
 import { decDateAction } from '../../redux/actions/decDateAction';
 import {setAuthAction} from '../../redux/actions/setAuthAction';
-import {toggleSideMenuAction} from '../../redux/actions/toggleSideMenuAction';
 import '../../styles/header/Header.css';
 
 class Header extends Component {

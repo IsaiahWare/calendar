@@ -10,22 +10,15 @@ class AddEvent extends React.Component {
         this.state = {
             name: "",
             userID: this.props.authReducer.id,
-            startMonth: "",
-            startDay: "",
-            startYear: "",
-            endMonth: "",
-            endDay: "",
-            endYear: "",
-            startHour: "",
-            startMinutes: "",
-            endHour: "",
-            endMinutes: ""
+            startDate: "",
+            endDate: "",
+            startTime: "",
+            endTime: ""
         }
     }
 
     handleAddEvent(event) {
         event.preventDefault();
-        const localStorage = window.localStorage;
         fetch('http://127.0.0.1:5000/add_event', {
             method: 'post',
             body: JSON.stringify(this.state)
@@ -49,54 +42,24 @@ class AddEvent extends React.Component {
                     name: event.target.value
                 })
                 break;
-            case 'startMonth':
+            case 'startDate':
                 this.setState({
-                    startMonth: event.target.value
+                    startDate: event.target.value
                 })
                 break;
-            case 'startDay':
+            case 'endDate':
                 this.setState({
-                    startDay: event.target.value
+                    endDate: event.target.value
                 })
                 break;
-            case 'startYear':
+            case 'startTime':
                 this.setState({
-                    startYear: event.target.value
+                    startTime: event.target.value
                 })
                 break;
-            case 'endMonth':
+            case 'endTime':
                 this.setState({
-                    endMonth: event.target.value
-                })
-                break;
-            case 'endDay':
-                this.setState({
-                    endDay: event.target.value
-                })
-                break;
-            case 'endYear':
-                this.setState({
-                    endYear: event.target.value
-                })
-                break;
-            case 'startHour':
-                this.setState({
-                    startHour: event.target.value
-                })
-                break;
-            case 'startMinutes':
-                this.setState({
-                    startMinutes: event.target.value
-                })
-                break;
-            case 'endHour':
-                this.setState({
-                    endHour: event.target.value
-                })
-                break;
-            case 'endMinutes':
-                this.setState({
-                    endMinutes: event.target.value
+                    endTime: event.target.value
                 })
                 break;
             default:
@@ -112,24 +75,10 @@ class AddEvent extends React.Component {
         return (
             <form onSubmit={this.handleAddEvent}>
                 <input onChange={this.handleChange} type="text" name="name" placeholder="Event title" required/>
-                <div>
-                    <input onChange={this.handleChange} type="number" name="startDay" placeholder="DD" required/>
-                    <input onChange={this.handleChange} type="number" name="startMonth" placeholder="MM" required/>
-                    <input onChange={this.handleChange} type="number" name="startYear" placeholder="YYYY" required/>
-                </div>
-                <div>
-                    <input onChange={this.handleChange} type="number" name="endDay" placeholder="DD" required/>
-                    <input onChange={this.handleChange} type="number" name="endMonth" placeholder="MM" required/>
-                    <input onChange={this.handleChange} type="number" name="endYear" placeholder="YYYY" required/>
-                </div>
-                <div>
-                    <input onChange={this.handleChange} type="number" name="startHour" placeholder="HH" required/>
-                    <input onChange={this.handleChange} type="number" name="startMinutes" placeholder="MM" required/>
-                </div>
-                <div>
-                    <input onChange={this.handleChange} type="number" name="endHour" placeholder="HH" required/>
-                    <input onChange={this.handleChange} type="number" name="endMinutes" placeholder="MM" required/>
-                </div>
+                <input onChange={this.handleChange} type="date" name="startDate" placeholder="start date" required/>
+                <input onChange={this.handleChange} type="date" name="endDate" placeholder="end date" required/>
+                <input onChange={this.handleChange} type="time" name="startTime" placeholder="start time" required/>
+                <input onChange={this.handleChange} type="time" name="endTime" placeholder="end time" required/>
                 
                 <input type="submit" value="submit"/>
             </form>

@@ -4,6 +4,10 @@ import '../../styles/calendar/Week.css';
 
 class Week extends Component {
 
+    componentDidMount() {
+
+    }
+
     render() {
         let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
         let dayIndex = 0;
@@ -12,29 +16,29 @@ class Week extends Component {
         let date = this.props.date;
         let nextMonthDate = new Date(date.getFullYear(), date.getMonth()+1, 1);
         let lastMonthDate = new Date(date.getFullYear(), date.getMonth()-1, 1);
-
+        let userID = this.props.userID;
         return (
             <div className={this.props.className}>
                 {
                     this.props.days.map( function(d, i) {
                         if (firstWeek) {
                             if (d["day"] === 1) {
-                                return <Day number={d["day"]} id={d["id"]} key={i} dayName={days[dayIndex++]} firstDay={true} date={date}/>;
+                                return <Day userID={userID} number={d["day"]} id={d["id"]} key={i} dayName={days[dayIndex++]} firstDay={true} date={date}/>;
                             } else if (d["faded"] != null) {
-                                return <Day number={d["day"]} id={d["id"]} key={i} dayName={days[dayIndex++]} faded={true} date={lastMonthDate}/>;
+                                return <Day userID={userID} number={d["day"]} id={d["id"]} key={i} dayName={days[dayIndex++]} faded={true} date={lastMonthDate}/>;
                             } else {
-                                return <Day number={d["day"]} id={d["id"]} key={i} dayName={days[dayIndex++]} date={date}/>;
+                                return <Day userID={userID} number={d["day"]} id={d["id"]} key={i} dayName={days[dayIndex++]} date={date}/>;
                             }
                         } else if (lastWeek) {
                             if (d["day"] === 1) {
-                                return <Day number={d["day"]} id={d["id"]} key={i} lastDay={true} faded={true} date={date}/>;
+                                return <Day userID={userID} number={d["day"]} id={d["id"]} key={i} lastDay={true} faded={true} date={date}/>;
                             } else if (d["day"] < 8) { 
-                                return <Day number={d["day"]} id={d["id"]} key={i} faded={true} date={nextMonthDate}/>;
+                                return <Day userID={userID} number={d["day"]} id={d["id"]} key={i} faded={true} date={nextMonthDate}/>;
                             } else {
-                                return <Day number={d["day"]} id={d["id"]} key={i} date={date}/>;
+                                return <Day userID={userID} number={d["day"]} id={d["id"]} key={i} date={date}/>;
                             }
                         } else {
-                            return <Day number={d["day"]} id={d["id"]} key={i} date={date}/>;
+                            return <Day userID={userID}number={d["day"]} id={d["id"]} key={i} date={date}/>;
                         }
                     })
                 }
